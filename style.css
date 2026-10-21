@@ -1,0 +1,8 @@
+/* Płynne przewijanie i drobne poprawki */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #0a0a0a;
+}
