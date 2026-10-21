@@ -6,89 +6,47 @@
     <title>PixelForge // Web Gaming Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-neutral-950 text-neutral-100 min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+<body class="bg-[#0a0a0a] text-white font-sans antialiased">
 
-    <!-- Pasek nawigacji -->
-    <header class="border-b border-neutral-800 bg-neutral-900/60 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-black text-black text-lg shadow-lg shadow-cyan-500/20">
-                    A
-                </div>
-                <span class="font-bold text-xl tracking-wider text-white">ARCADE<span class="text-cyan-400">LAB</span></span>
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-8 py-4 border-b border-neutral-800/50">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center font-bold text-black">
+                P
             </div>
-            <nav class="flex items-center gap-6 text-sm text-neutral-400">
-                <a href="#games" class="hover:text-cyan-400 transition">Gry</a>
-                <a href="#about" class="hover:text-cyan-400 transition">O projekcie</a>
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/50 text-cyan-400 text-xs font-mono">
-                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                    v0.1 Alpha
-                </span>
-            </nav>
+            <span class="font-bold text-xl tracking-wider text-white">PIXEL<span class="text-cyan-400">FORGE</span></span>
         </div>
-    </header>
+        <div class="flex items-center gap-6 text-sm text-neutral-400">
+            <a href="#" class="hover:text-white transition">Gry</a>
+            <a href="#" class="hover:text-white transition">O projekcie</a>
+            <span class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-mono">v0.1 Alpha</span>
+        </div>
+    </nav>
 
-    <!-- Sekcja Hero -->
-    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
-        <section class="text-center py-12 mb-12">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-                Następna generacja gier <span class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-500 bg-clip-text text-transparent">w Twojej przeglądarce</span>.
+    <!-- Hero Section -->
+    <main class="max-w-5xl mx-auto px-6 py-20">
+        <div class="text-center mb-20">
+            <h1 class="text-5xl md:text-6xl font-black tracking-tight mb-6">
+                Następna generacja gier <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">w Twojej przeglądarce.</span>
             </h1>
-            <p class="text-neutral-400 max-w-2xl mx-auto text-base md:text-lg">
+            <p class="text-neutral-400 max-w-2xl mx-auto text-lg">
                 Prawdziwe 3D, natychmiastowe ładowanie, brak instalacji. Eksperymentalne produkcje zasilane technologią WebGL i Three.js.
             </p>
-        </section>
+        </div>
 
-        <!-- Sekcja z grami -->
-        <section id="games" class="space-y-6">
-            <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
-                <h2 class="text-xl font-bold tracking-wide flex items-center gap-2">
-                    <i class="fa-solid fa-gamepad text-cyan-400"></i> Dostępne Gry
-                </h2>
-                <span class="text-xs text-neutral-500 font-mono">1 gra w bibliotece</span>
-            </div>
+        <!-- Games Section -->
+        <div class="flex items-center justify-between mb-8 border-b border-neutral-800 pb-4">
+            <h2 class="text-xl font-bold flex items-center gap-2">
+                <i class="fa-solid fa-gamepad text-cyan-400"></i> Dostępne Gry
+            </h2>
+            <span class="text-xs text-neutral-500 font-mono">1 gra w bibliotece</span>
+        </div>
 
-            <!-- Siatka gier -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Karta Gry: Neon Drive -->
-                <div class="group relative rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-cyan-500/50 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10">
-                    <div class="h-48 bg-gradient-to-br from-neutral-800 to-neutral-950 relative overflow-hidden flex items-center justify-center">
-                        <i class="fa-solid fa-car text-6xl text-cyan-500/30 group-hover:text-cyan-400/50 group-hover:scale-110 transition duration-500"></i>
-                        <span class="absolute top-3 left-3 bg-cyan-500/20 text-cyan-300 text-xs px-2.5 py-1 rounded border border-cyan-500/30 font-mono">
-                            3D ARCADE
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyan-400 transition">Neon Drive 3D</h3>
-                        <p class="text-neutral-400 text-sm mb-6 line-clamp-2">
-                            Dynamiczny retro-futurystyczny wyścig nocną autostradą. Unikaj ruchu ulicznego i zbieraj punkty nitro.
-                        </p>
-                        <a href="games/neon-drive/index.html" class="w-full inline-flex items-center justify-center gap-2 bg-neutral-800 hover:bg-cyan-500 hover:text-black text-white font-semibold py-2.5 px-4 rounded-xl transition-all duration-200">
-                            <i class="fa-solid fa-play text-xs"></i> Zagraj Teraz
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Miejsce na kolejną grę (Wkrótce) -->
-                <div class="rounded-2xl border border-dashed border-neutral-800 p-6 flex flex-col items-center justify-center text-center text-neutral-500 min-h-[340px]">
-                    <div class="w-12 h-12 rounded-full bg-neutral-900 flex items-center justify-center mb-3">
-                        <i class="fa-solid fa-plus text-neutral-600"></i>
-                    </div>
-                    <p class="font-semibold text-neutral-400">Kolejny projekt w drodze</p>
-                    <p class="text-xs text-neutral-600 mt-1">Eksperymentujemy z nową mechaniką...</p>
-                </div>
-
-            </div>
-        </section>
-    </main>
-
-    <!-- Stopka -->
-    <footer class="border-t border-neutral-900 py-8 text-center text-xs text-neutral-600">
-        ArcadeLab &copy; 2026. Zbudowane na Three.js i technologiach webowych.
-    </footer>
-
-</body>
-</html>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Game 1: Neon Drive 3D -->
+            <div class="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden hover:border-cyan-500/50 transition duration-300 group">
+                <div class="h-48 bg-neutral-950 flex items-center justify-center relative">
+                    <span class="absolute top-4 left-4 text-[10px] font-mono px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded border border-cyan-500/30">3D ARCADE</span>
+                    <i class="fa-
