@@ -11,7 +11,6 @@
         body { margin: 0; overflow: hidden; background: #111; user-select: none; }
         #canvas-container { width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; }
         
-        /* Styl okna dialogowego w starym klimacie */
         .rpg-dialogue {
             background: rgba(20, 15, 10, 0.95);
             border: 2px solid #5a4b3c;
@@ -23,10 +22,8 @@
 </head>
 <body class="text-neutral-200 antialiased">
 
-    <!-- Kontener 3D -->
     <div id="canvas-container"></div>
 
-    <!-- UI: Powrót i Info -->
     <div class="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
         <a href="../../index.html" class="bg-neutral-900/80 border border-neutral-700 px-4 py-2 rounded text-xs font-bold text-neutral-400 hover:text-amber-500 transition pointer-events-auto">
             <i class="fa-solid fa-arrow-left"></i> Opuść wioskę
@@ -37,7 +34,6 @@
         </div>
     </div>
 
-    <!-- UI: Ekran Dialogu (domyślnie ukryty) -->
     <div id="dialogue-ui" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 w-full max-w-3xl hidden">
         <div class="rpg-dialogue rounded-lg p-6">
             <div class="flex items-end gap-4 mb-4 border-b border-[#5a4b3c] pb-4">
@@ -48,9 +44,7 @@
                 </div>
             </div>
             
-            <div class="flex flex-col gap-1" id="dialogue-options">
-                <!-- Opcje generowane przez JS -->
-            </div>
+            <div class="flex flex-col gap-1" id="dialogue-options"></div>
         </div>
     </div>
 
@@ -61,12 +55,10 @@
         let isDialogueActive = false;
 
         function init() {
-            // Scena i Mgła (mroczny klimat)
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x1a1a24);
             scene.fog = new THREE.FogExp2(0x1a1a24, 0.04);
 
-            // Kamera izometryczna
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
             camera.position.set(15, 20, 15);
 
@@ -83,7 +75,6 @@
             createPlayer();
             createNPC();
 
-            // Nasłuchiwanie kliknięć
             window.addEventListener('pointerdown', onPointerDown);
             window.addEventListener('resize', onWindowResize);
 
@@ -105,7 +96,6 @@
         }
 
         function buildEnvironment() {
-            // Ziemia
             const groundGeo = new THREE.PlaneGeometry(100, 100);
             const groundMat = new THREE.MeshStandardMaterial({ color: 0x223322, roughness: 0.9 });
             const ground = new THREE.Mesh(groundGeo, groundMat);
@@ -114,7 +104,6 @@
             ground.name = "ground";
             scene.add(ground);
 
-            // Prosty zarys murów zamku
             const wallMat = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.8 });
             for(let i=0; i<5; i++) {
                 const wall = new THREE.Mesh(new THREE.BoxGeometry(4, 6, 4), wallMat);
@@ -123,7 +112,6 @@
                 scene.add(wall);
             }
 
-            // Ognisko (światło)
             const fire = new THREE.PointLight(0xff6600, 2, 15);
             fire.position.set(5, 1, -5);
             scene.add(fire);
@@ -134,8 +122,8 @@
         }
 
         function createPlayer() {
-            // Tymczasowy model gracza (niebieski pionek)
-            const geo = new THREE.CapsuleGeometry(0.5, 1, 4, 8);
+            // Zamieniona Kapsuła na Cylinder
+            const geo = new THREE.CylinderGeometry(0.5, 0.5, 2, 16);
             const mat = new THREE.MeshStandardMaterial({ color: 0x2563eb });
             player = new THREE.Mesh(geo, mat);
             player.position.set(0, 1, 0);
@@ -146,11 +134,11 @@
         }
 
         function createNPC() {
-            // Tymczasowy model NPC (czerwony pionek przy ognisku)
-            const geo = new THREE.CapsuleGeometry(0.5, 1, 4, 8);
+            // Zamieniona Kapsuła na Cylinder
+            const geo = new THREE.CylinderGeometry(0.5, 0.5, 2, 16);
             const mat = new THREE.MeshStandardMaterial({ color: 0xdc2626 });
             const npc = new THREE.Mesh(geo, mat);
-            npc.position.set(3, 1, -5); // Stoi blisko ogniska
+            npc.position.set(3, 1, -5); 
             npc.castShadow = true;
             npc.name = "npc_guard";
             scene.add(npc);
@@ -158,15 +146,13 @@
         }
 
         function onPointerDown(event) {
-            if (isDialogueActive) return; // Zablokuj chodzenie podczas rozmowy
+            if (isDialogueActive) return;
 
-            // Obliczanie pozycji kliknięcia
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
 
-            // Sprawdź czy kliknięto NPC
             const npcIntersects = raycaster.intersectObjects(npcs);
             if (npcIntersects.length > 0) {
                 const clickedNPC = npcIntersects[0].object;
@@ -175,28 +161,25 @@
                 if (distance < 4) {
                     startDialogue();
                 } else {
-                    // Jeśli za daleko, po prostu podejdź bliżej NPC
                     targetPosition.copy(clickedNPC.position);
                 }
                 return;
             }
 
-            // Sprawdź czy kliknięto ziemię
             const groundIntersect = raycaster.intersectObjects(scene.children).filter(obj => obj.object.name === "ground");
             if (groundIntersect.length > 0) {
                 targetPosition.copy(groundIntersect[0].point);
-                targetPosition.y = 1; // Utrzymaj gracza na ziemi
+                targetPosition.y = 1; 
             }
         }
 
-        // --- SYSTEM DIALOGOWY ---
         const dialogueUI = document.getElementById('dialogue-ui');
         const npcText = document.getElementById('npc-text');
         const optionsContainer = document.getElementById('dialogue-options');
 
         function startDialogue() {
             isDialogueActive = true;
-            targetPosition.copy(player.position); // Zatazymaj gracza
+            targetPosition.copy(player.position); 
             dialogueUI.classList.remove('hidden');
             loadDialogueNode(0);
         }
@@ -206,7 +189,6 @@
             dialogueUI.classList.add('hidden');
         }
 
-        // Klasyczne drzewko dialogowe
         const dialogueTree = {
             0: {
                 text: '"Czego tu szukasz? Lepiej nie kręć się przy zamku, jeśli zależy Ci na głowie."',
@@ -258,11 +240,8 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            // Płynne poruszanie gracza (Lerp)
             if (!isDialogueActive) {
                 player.position.lerp(targetPosition, 0.05);
-                
-                // Kamera podąża za graczem
                 camera.position.x = player.position.x + 15;
                 camera.position.z = player.position.z + 15;
                 camera.lookAt(player.position);
